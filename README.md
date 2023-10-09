@@ -6,6 +6,8 @@ This is the source code from this [article](https://www.vynci.dev/posts/robot-co
 
 ![Overview](./assets/hardware_full.jpg)
 
+![Overview](./assets/rovy_p1_overview.mp4)
+
 ## Development
 
 `$ npm install`
