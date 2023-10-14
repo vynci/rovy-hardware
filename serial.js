@@ -5,11 +5,11 @@ const motorDriverSerial = {
     baudRate: 9600
 }
 
-const port = new SerialPort(motorDriverSerial);
+const serialPort = new SerialPort(motorDriverSerial);
 
 const portWrite = async (data) => {
     return new Promise((resolve, reject)=> {
-        port.write(Buffer.from([data]), function(err) {
+        serialPort.write(Buffer.from([data]), function(err) {
         if (err) {
             reject(err.message)
         }
@@ -19,6 +19,6 @@ const portWrite = async (data) => {
 }
 
 module.exports = {
-    port,
+    serialPort,
     portWrite
 }

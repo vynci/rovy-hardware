@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const { mqttEndpoint } = require('./constants');
 
-const client = mqtt.connect(
+const mqttClient = mqtt.connect(
     mqttEndpoint,
     {
         key:  fs.readFileSync('./creds/private.key'),
@@ -15,5 +15,5 @@ const client = mqtt.connect(
 );
 
 module.exports = {
-    client
+    mqttClient
 };
