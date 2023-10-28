@@ -7,7 +7,7 @@ const { motorSerialPort, motorPortWrite } = require('./motorSerial');
 const { gps, gpsSerialParser } = require('./gpsSerial');
 const { lteSerialPort, lteSerialParser, ltePortWrite } = require('./lteSerial');
 const { bme280, forcedRead } = require('./bme280');
-const { analogSensors } = require('./analogSensors');
+const { analogSensors, ADS1115 } = require('./analogSensors');
 
 const motor = require("./motorControl");
 
