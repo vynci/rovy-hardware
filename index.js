@@ -102,7 +102,7 @@ analogSensors.openPromisified(1).then(async (bus) => {
       const batteryVoltage = (5*(value2/full)) / 0.2
       const irRange = 5*(value1/full);
 
-      console.log('IR range:', irRange);
+      console.log('IR range:', irRange.toFixed(4));
       console.log('Batt:', batteryVoltage.toFixed(2));
 
       telemetry.updateBattery = batteryVoltage;

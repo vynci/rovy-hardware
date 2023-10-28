@@ -5,7 +5,7 @@ const delay = millis => new Promise(resolve => setTimeout(resolve, millis));
 const forcedRead = async sensor => {
   await sensor.triggerForcedMeasurement();
   await delay(sensor.maximumMeasurementTime());
-  console.log(await sensor.read());
+  return await sensor.read();
 }
 
 module.exports = {
