@@ -59,9 +59,9 @@ gps.on('data', data => {
         telemetry.updateGPS = {
             lat: { value: gps.state.lat },
             lon: { value: gps.state.lon},
-            speed: { value: gps.state.speed},
-            track: { value: gps.state.track, unit: "°"},
-            alt: { value: gps.state.alt, unit: "m"},
+            speed: { value: Math.round(gps.state.speed)},
+            track: { value: Math.round(gps.state.track), unit: "°"},
+            alt: { value: Math.rount(gps.state.alt), unit: "m"},
         }
     }
 })
