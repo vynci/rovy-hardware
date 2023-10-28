@@ -7,7 +7,7 @@ const motorDriverSerial = {
 
 const serialPort = new SerialPort(motorDriverSerial);
 
-const portWrite = async (data) => {
+const motorPortWrite = async (data) => {
     return new Promise((resolve, reject)=> {
         serialPort.write(Buffer.from([data]), function(err) {
         if (err) {
@@ -19,6 +19,6 @@ const portWrite = async (data) => {
 }
 
 module.exports = {
-    serialPort,
-    portWrite
+    motorSerialPort,
+    motorPortWrite
 }
