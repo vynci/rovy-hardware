@@ -51,7 +51,7 @@ mqttClient.on("message", async (topic, message) => {
 // GPS SERIAL LISTENERS
 
 gps.on('data', data => {
-    console.log(gps.state);
+    if(gps.state.lat && gps.state.lon) console.log(gps.state);
     // MQTT SEND HERE
 })
   

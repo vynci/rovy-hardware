@@ -9,7 +9,7 @@ const motorSerialPort = new SerialPort(motorDriverSerial);
 
 const motorPortWrite = async (data) => {
     return new Promise((resolve, reject)=> {
-        serialPort.write(Buffer.from([data]), function(err) {
+        motorSerialPort.write(Buffer.from([data]), function(err) {
         if (err) {
             reject(err.message)
         }
