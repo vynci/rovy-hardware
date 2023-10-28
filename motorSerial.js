@@ -5,7 +5,7 @@ const motorDriverSerial = {
     baudRate: 9600
 }
 
-const serialPort = new SerialPort(motorDriverSerial);
+const motorSerialPort = new SerialPort(motorDriverSerial);
 
 const motorPortWrite = async (data) => {
     return new Promise((resolve, reject)=> {

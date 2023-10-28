@@ -94,5 +94,3 @@ kvsClient.stderr.on('data', (data) => {
     console.error(`stderr: ${data}`);
 });
 
-// <batt_voltage>,<batt_percent>,<bme280_temp>,<bme280_humidity>,<bme280_pressure>,<gps_lat>,<gps_lon>
-
