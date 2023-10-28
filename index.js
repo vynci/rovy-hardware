@@ -8,6 +8,7 @@ const { gps, gpsSerialParser } = require('./gpsSerial');
 const { lteSerialPort, lteSerialParser, ltePortWrite } = require('./lteSerial');
 const { bme280, forcedRead } = require('./bme280');
 const { analogSensors, ADS1115 } = require('./analogSensors');
+const { telemetry } = require('./data');
 
 const motor = require("./motorControl");
 
@@ -81,7 +82,10 @@ lteSerialParser.on('data', (data)=>{
 
 bme280.open({forcedMode: true}).then(sensor => {
     setInterval(_ => {
-      forcedRead(sensor).catch(console.log);
+      forcedRead(sensor).catch((data)=>{
+        telemetry.updateTemperature(data.temperature);
+        telemetry.updateHumidity(data.humidity);
+      });
     }, 15000);
 }).catch(console.log);
 
@@ -96,11 +100,20 @@ analogSensors.openPromisified(1).then(async (bus) => {
       let value2 = await ads1115.measure('2+GND');
 
       const batteryVoltage = (5*(value2/full)) / 0.2
+      const irRange = 5*(value1/full);
 
-      console.log('IR range:', 5*(value1/full));
+      console.log('IR range:', irRange);
       console.log('Batt:', batteryVoltage.toFixed(2));
+
+      telemetry.updateBattery(batteryVoltage);
+      telemetry.updateRangeSensor(irRange);
     }, 2000);
-  })
+});
+
+// INTERVAL READER
+setInterval(()=>{
+    console.log('telemetry', telemetry);
+}, 5000)
 
 // KVS OUT LISTENERS
 
