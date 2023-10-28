@@ -1,7 +1,7 @@
 const { spawn } = require('child_process');
 const kvsClient = spawn('/home/pi/rovy-cam/kvsWebrtcClientMasterGstSample', ['test-stream']);
 
-const { mqttMotorChannel } = require("./constants");
+const { mqttMotorChannel, mqttSensorTopic } = require("./constants");
 const { mqttClient } = require('./iot');
 const { motorSerialPort, motorPortWrite } = require('./motorSerial');
 const { gps, gpsSerialParser } = require('./gpsSerial');
@@ -102,14 +102,15 @@ analogSensors.openPromisified(1).then(async (bus) => {
       const batteryVoltage = (5*(value2/full)) / 0.2
       const irRange = 5*(value1/full);
 
-      telemetry.updateBattery = batteryVoltage.toFixed(2);
-      telemetry.updateRangeSensor = irRange.toFixed(4);
+      telemetry.updateBattery = parseFloat(batteryVoltage.toFixed(2));
+      telemetry.updateRangeSensor = parseFloat(irRange.toFixed(4));
     }, 2000);
 });
 
 // INTERVAL READER
 setInterval(()=>{
     console.log('telemetry', telemetry);
+    mqttClient.publish(mqttSensorTopic, JSON.stringify(telemetry));
 }, 5000)
 
 // KVS OUT LISTENERS
