@@ -41,11 +41,13 @@ mqttClient.on("connect", () => {
 });
 
 mqttClient.on("message", async (topic, message) => {
-    const procedures = motor.calculateValues(message.toString());
+    if(topic.includes('rovy/motor')) {
+        const procedures = motor.calculateValues(message.toString());
 
-    if(procedures?.length) {
-        for (let step = 0; step < procedures.length; step++) {
-            await motorPortWrite(procedures[step]);
+        if(procedures?.length) {
+            for (let step = 0; step < procedures.length; step++) {
+                await motorPortWrite(procedures[step]);
+            }
         }
     }
 });
