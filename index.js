@@ -34,7 +34,7 @@ motorSerialPort.on('error', function(err) {
 mqttClient.on("connect", () => {
     console.log('connected to mqtt broker');
 
-    client.subscribe(mqttMotorChannel, (err) => {
+    mqttClient.subscribe(mqttMotorChannel, (err) => {
         if(!err) console.log(`subscribed to [${mqttMotorChannel}]`);
     });
 });
