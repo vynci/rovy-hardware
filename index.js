@@ -53,8 +53,15 @@ mqttClient.on("message", async (topic, message) => {
 // GPS SERIAL LISTENERS
 
 gps.on('data', data => {
-    if(gps.state.lat && gps.state.lon) console.log(gps.state);
-    // MQTT SEND HERE
+    if(gps.state.lat && gps.state.lon) {
+        telemetry.updateGPS = {
+            lat: { value: gps.state.lat },
+            lon: { value: gps.state.lon},
+            speed: { value: gps.state.speed},
+            track: { value: gps.state.track, unit: "°"},
+            alt: { value: gps.state.alt, unit: "m"},
+        }
+    }
 })
   
 gpsSerialParser.on('data', (data)=>{
