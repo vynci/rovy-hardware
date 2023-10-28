@@ -82,9 +82,9 @@ lteSerialParser.on('data', (data)=>{
 
 bme280.open({forcedMode: true}).then(sensor => {
     setInterval(_ => {
-      forcedRead(sensor).catch((data)=>{
-        telemetry.updateTemperature = data.temperature;
-        telemetry.updateHumidity = data.humidity;
+      forcedRead(sensor).then((data)=>{
+        telemetry.updateTemperature = Math.round(data.temperature);
+        telemetry.updateHumidity = Math.round(data.humidity);
       });
     }, 15000);
 }).catch(console.log);
@@ -102,11 +102,8 @@ analogSensors.openPromisified(1).then(async (bus) => {
       const batteryVoltage = (5*(value2/full)) / 0.2
       const irRange = 5*(value1/full);
 
-      console.log('IR range:', irRange.toFixed(4));
-      console.log('Batt:', batteryVoltage.toFixed(2));
-
-      telemetry.updateBattery = batteryVoltage;
-      telemetry.updateRangeSensor = irRange;
+      telemetry.updateBattery = batteryVoltage.toFixed(2);
+      telemetry.updateRangeSensor = irRange.toFixed(4);
     }, 2000);
 });
 
