@@ -7,6 +7,7 @@ const { motorSerialPort, motorPortWrite } = require('./motorSerial');
 const { gps, gpsSerialParser } = require('./gpsSerial');
 const { lteSerialPort, lteSerialParser, ltePortWrite } = require('./lteSerial');
 const { bme280, forcedRead } = require('./bme280');
+const { analogSensors } = require('./analogSensors');
 
 const motor = require("./motorControl");
 
@@ -81,8 +82,25 @@ lteSerialParser.on('data', (data)=>{
 bme280.open({forcedMode: true}).then(sensor => {
     setInterval(_ => {
       forcedRead(sensor).catch(console.log);
-    }, 5000);
+    }, 15000);
 }).catch(console.log);
+
+// ANALOG SENSORS
+
+analogSensors.openPromisified(1).then(async (bus) => {
+    const ads1115 = await ADS1115(bus);
+    const full = 26480;
+  
+    setInterval(async () => {
+      let value1 = await ads1115.measure('0+GND');
+      let value2 = await ads1115.measure('2+GND');
+
+      const batteryVoltage = (5*(value2/full)) / 0.2
+
+      console.log('IR range:', 5*(value1/full));
+      console.log('Batt:', batteryVoltage.toFixed(2));
+    }, 2000);
+  })
 
 // KVS OUT LISTENERS
 
