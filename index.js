@@ -120,7 +120,7 @@ analogSensors.openPromisified(1).then(async (bus) => {
 setInterval(()=>{
     console.log('telemetry', telemetry);
     mqttClient.publish(mqttSensorTopic, JSON.stringify(telemetry));
-}, 5000)
+}, 1000)
 
 // KVS OUT LISTENERS
 
