@@ -113,14 +113,14 @@ analogSensors.openPromisified(1).then(async (bus) => {
 
       telemetry.updateBattery = parseFloat(batteryVoltage.toFixed(2));
       telemetry.updateRangeSensor = parseFloat(irRange.toFixed(4));
-    }, 2000);
+    }, 1000);
 });
 
 // INTERVAL READER
 setInterval(()=>{
     console.log('telemetry', telemetry);
     mqttClient.publish(mqttSensorTopic, JSON.stringify(telemetry));
-}, 1000)
+}, 500)
 
 // KVS OUT LISTENERS
 
